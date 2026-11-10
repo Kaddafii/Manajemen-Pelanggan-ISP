@@ -80,4 +80,56 @@ class User extends Authenticatable
     {
         return $this->role === 'Staff';
     }
+
+    /**
+     * Scope query untuk pencarian data pengguna berdasarkan kata kunci nama atau email.
+     *
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @param string|null $keyword
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeSearchUsersByKeyword(\Illuminate\Database\Eloquent\Builder $query, ?string $keyword): \Illuminate\Database\Eloquent\Builder
+    {
+        if (empty($keyword)) {
+            return $query;
+        }
+
+        return $query->where(function (\Illuminate\Database\Eloquent\Builder $subQuery) use ($keyword) {
+            $subQuery->where('name', 'LIKE', "%{$keyword}%")
+                ->orWhere('email', 'LIKE', "%{$keyword}%");
+        });
+    }
+
+    /**
+     * Scope query untuk filter pengguna berdasarkan role.
+     *
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @param string|null $role
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeFilterByRole(\Illuminate\Database\Eloquent\Builder $query, ?string $role): \Illuminate\Database\Eloquent\Builder
+    {
+        if (empty($role) || !in_array($role, ['Administrator', 'Staff'], true)) {
+            return $query;
+        }
+
+        return $query->where('role', $role);
+    }
+
+    /**
+     * Scope query untuk pengurutan data pengguna secara dinamis dan aman.
+     *
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @param string|null $column
+     * @param string|null $direction
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeSortUserRecords(\Illuminate\Database\Eloquent\Builder $query, ?string $column, ?string $direction): \Illuminate\Database\Eloquent\Builder
+    {
+        $allowedColumns = ['name', 'email', 'role', 'created_at'];
+        $sortColumn = in_array($column, $allowedColumns, true) ? $column : 'created_at';
+        $sortDirection = strtolower($direction) === 'asc' ? 'asc' : 'desc';
+
+        return $query->orderBy($sortColumn, $sortDirection);
+    }
 }

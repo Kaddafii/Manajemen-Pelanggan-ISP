@@ -4,6 +4,7 @@ use App\Http\Controllers\CustomerManagementController;
 use App\Http\Controllers\DashboardOverviewController;
 use App\Http\Controllers\InvoiceManagementController;
 use App\Http\Controllers\UserAuthenticationController;
+use App\Http\Controllers\UserManagementController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -43,9 +44,24 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/dashboard', [DashboardOverviewController::class, 'displayDashboardMetrics'])
             ->name('dashboard.index');
 
-        Route::get('/users', function () {
-            return view('users.index');
-        })->name('users.index');
+        // Modul Pengguna (User Management - Khusus Administrator)
+        Route::get('/users', [UserManagementController::class, 'displayUserList'])
+            ->name('users.index');
+
+        Route::get('/users/create', [UserManagementController::class, 'showUserCreationForm'])
+            ->name('users.create');
+
+        Route::post('/users', [UserManagementController::class, 'storeNewUserRecord'])
+            ->name('users.store');
+
+        Route::get('/users/{user}/edit', [UserManagementController::class, 'showUserEditingForm'])
+            ->name('users.edit');
+
+        Route::put('/users/{user}', [UserManagementController::class, 'updateExistingUserRecord'])
+            ->name('users.update');
+
+        Route::delete('/users/{user}', [UserManagementController::class, 'deleteUserRecord'])
+            ->name('users.destroy');
     });
 
     // Modul Pelanggan (Administrator & Staff)
