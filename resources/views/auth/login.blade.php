@@ -11,7 +11,7 @@
                     class="inline-flex items-center justify-center w-12 h-12 rounded-xl bg-[#FAF8F5] border-2 border-[#18181B] shadow-[2px_2px_0px_#18181B] mb-3 text-[#18181B]">
                     <i class="bi bi-shield-lock text-2xl"></i>
                 </div>
-                <h2 class="text-2xl font-extrabold tracking-tight text-[#18181B] uppercase">Login</h2>
+                <h2 class="text-2xl font-extrabold tracking-tight text-[#18181B] uppercase">Masuk Akun</h2>
             </div>
 
             <!-- Alert Banner Kesalahan -->
