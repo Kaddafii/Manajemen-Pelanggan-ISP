@@ -35,5 +35,8 @@ class DatabaseSeeder extends Seeder
                 'role' => 'Staff',
             ]
         );
+
+        // Seeding data awal pelanggan
+        $this->call(CustomerSeeder::class);
     }
 }

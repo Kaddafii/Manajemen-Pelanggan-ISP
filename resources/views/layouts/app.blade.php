@@ -38,7 +38,7 @@
                         <!-- Menu Dashboard (Khusus Administrator) -->
                         <a 
                             href="{{ route('dashboard.index') }}" 
-                            class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl font-bold text-sm border-2 transition-all {{ request()->routeIs('dashboard.*') ? 'bg-[#18181B] text-[#FAF8F5] border-[#18181B] shadow-[3px_3px_0px_#18181B]' : 'text-[#18181B] border-transparent hover:border-[#18181B] hover:bg-[#F4F4F5]' }}"
+                            class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl font-bold text-sm border-2 transition-all cursor-pointer {{ request()->routeIs('dashboard.*') ? 'bg-[#18181B] text-[#FAF8F5] border-[#18181B] shadow-[3px_3px_0px_#18181B] hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[4px_4px_0px_#18181B] active:translate-x-0.5 active:translate-y-0.5 active:shadow-[1px_1px_0px_#18181B]' : 'text-[#18181B] border-transparent hover:border-[#18181B] hover:bg-[#F4F4F5] hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[3px_3px_0px_#18181B] active:translate-x-0.5 active:translate-y-0.5 active:shadow-[1px_1px_0px_#18181B]' }}"
                         >
                             <i class="bi bi-speedometer2 text-base"></i>
                             <span>Dashboard</span>
@@ -48,7 +48,7 @@
                     <!-- Menu Pelanggan (Administrator & Staff) -->
                     <a 
                         href="{{ route('customers.index') }}" 
-                        class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl font-bold text-sm border-2 transition-all {{ request()->routeIs('customers.*') ? 'bg-[#18181B] text-[#FAF8F5] border-[#18181B] shadow-[3px_3px_0px_#18181B]' : 'text-[#18181B] border-transparent hover:border-[#18181B] hover:bg-[#F4F4F5]' }}"
+                        class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl font-bold text-sm border-2 transition-all cursor-pointer {{ request()->routeIs('customers.*') ? 'bg-[#18181B] text-[#FAF8F5] border-[#18181B] shadow-[3px_3px_0px_#18181B] hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[4px_4px_0px_#18181B] active:translate-x-0.5 active:translate-y-0.5 active:shadow-[1px_1px_0px_#18181B]' : 'text-[#18181B] border-transparent hover:border-[#18181B] hover:bg-[#F4F4F5] hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[3px_3px_0px_#18181B] active:translate-x-0.5 active:translate-y-0.5 active:shadow-[1px_1px_0px_#18181B]' }}"
                     >
                         <i class="bi bi-people text-base"></i>
                         <span>Pelanggan</span>
@@ -57,7 +57,7 @@
                     <!-- Menu Tagihan (Administrator & Staff) -->
                     <a 
                         href="{{ route('invoices.index') }}" 
-                        class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl font-bold text-sm border-2 transition-all {{ request()->routeIs('invoices.*') ? 'bg-[#18181B] text-[#FAF8F5] border-[#18181B] shadow-[3px_3px_0px_#18181B]' : 'text-[#18181B] border-transparent hover:border-[#18181B] hover:bg-[#F4F4F5]' }}"
+                        class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl font-bold text-sm border-2 transition-all cursor-pointer {{ request()->routeIs('invoices.*') ? 'bg-[#18181B] text-[#FAF8F5] border-[#18181B] shadow-[3px_3px_0px_#18181B] hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[4px_4px_0px_#18181B] active:translate-x-0.5 active:translate-y-0.5 active:shadow-[1px_1px_0px_#18181B]' : 'text-[#18181B] border-transparent hover:border-[#18181B] hover:bg-[#F4F4F5] hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[3px_3px_0px_#18181B] active:translate-x-0.5 active:translate-y-0.5 active:shadow-[1px_1px_0px_#18181B]' }}"
                     >
                         <i class="bi bi-receipt text-base"></i>
                         <span>Tagihan</span>
@@ -67,7 +67,7 @@
                         <!-- Menu Kelola User (Khusus Administrator) -->
                         <a 
                             href="{{ route('users.index') }}" 
-                            class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl font-bold text-sm border-2 transition-all {{ request()->routeIs('users.*') ? 'bg-[#18181B] text-[#FAF8F5] border-[#18181B] shadow-[3px_3px_0px_#18181B]' : 'text-[#18181B] border-transparent hover:border-[#18181B] hover:bg-[#F4F4F5]' }}"
+                            class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl font-bold text-sm border-2 transition-all cursor-pointer {{ request()->routeIs('users.*') ? 'bg-[#18181B] text-[#FAF8F5] border-[#18181B] shadow-[3px_3px_0px_#18181B] hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[4px_4px_0px_#18181B] active:translate-x-0.5 active:translate-y-0.5 active:shadow-[1px_1px_0px_#18181B]' : 'text-[#18181B] border-transparent hover:border-[#18181B] hover:bg-[#F4F4F5] hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[3px_3px_0px_#18181B] active:translate-x-0.5 active:translate-y-0.5 active:shadow-[1px_1px_0px_#18181B]' }}"
                         >
                             <i class="bi bi-person-gear text-base"></i>
                             <span>Kelola User</span>
@@ -86,7 +86,7 @@
                         @csrf
                         <button 
                             type="submit" 
-                            class="w-full flex items-center justify-center gap-2 px-3 py-2 rounded-xl bg-[#FFFFFF] text-[#DC2626] font-bold text-xs uppercase tracking-wider border-2 border-[#DC2626] shadow-[2px_2px_0px_#DC2626] hover:bg-[#FEF2F2] active:translate-x-0.5 active:translate-y-0.5 transition-all cursor-pointer"
+                            class="w-full flex items-center justify-center gap-2 px-3 py-2 rounded-xl bg-[#FFFFFF] text-[#DC2626] font-bold text-xs uppercase tracking-wider border-2 border-[#DC2626] shadow-[2px_2px_0px_#DC2626] hover:bg-[#FEF2F2] hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[3px_3px_0px_#DC2626] active:translate-x-0.5 active:translate-y-0.5 active:shadow-[1px_1px_0px_#DC2626] transition-all cursor-pointer"
                         >
                             <i class="bi bi-box-arrow-right font-bold"></i>
                             <span>Keluar</span>
@@ -107,28 +107,28 @@
                         </div>
                         <span class="text-xs font-bold uppercase tracking-tight">ISP Manajemen</span>
                     </div>
-                    <button type="button" id="closeMobileMenu" class="p-1 rounded-lg border-2 border-[#18181B] hover:bg-[#F4F4F5]">
+                    <button type="button" id="closeMobileMenu" class="p-1.5 rounded-lg border-2 border-[#18181B] bg-[#FFFFFF] shadow-[2px_2px_0px_#18181B] hover:bg-[#F4F4F5] hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[3px_3px_0px_#18181B] active:translate-x-0.5 active:translate-y-0.5 active:shadow-[1px_1px_0px_#18181B] transition-all cursor-pointer">
                         <i class="bi bi-x text-lg"></i>
                     </button>
                 </div>
 
                 <nav class="p-3 space-y-1.5 flex-1">
                     @if(auth()->user()->isAdministratorRole())
-                        <a href="{{ route('dashboard.index') }}" class="flex items-center gap-2.5 px-3 py-2 rounded-lg font-bold text-xs border-2 {{ request()->routeIs('dashboard.*') ? 'bg-[#18181B] text-[#FAF8F5] border-[#18181B]' : 'text-[#18181B] border-transparent' }}">
+                        <a href="{{ route('dashboard.index') }}" class="flex items-center gap-2.5 px-3 py-2 rounded-lg font-bold text-xs border-2 transition-all cursor-pointer {{ request()->routeIs('dashboard.*') ? 'bg-[#18181B] text-[#FAF8F5] border-[#18181B] shadow-[2px_2px_0px_#18181B]' : 'text-[#18181B] border-transparent hover:border-[#18181B] hover:bg-[#F4F4F5] hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[2px_2px_0px_#18181B] active:translate-x-0.5 active:translate-y-0.5' }}">
                             <i class="bi bi-speedometer2"></i>
                             <span>Dashboard</span>
                         </a>
                     @endif
-                    <a href="{{ route('customers.index') }}" class="flex items-center gap-2.5 px-3 py-2 rounded-lg font-bold text-xs border-2 {{ request()->routeIs('customers.*') ? 'bg-[#18181B] text-[#FAF8F5] border-[#18181B]' : 'text-[#18181B] border-transparent' }}">
+                    <a href="{{ route('customers.index') }}" class="flex items-center gap-2.5 px-3 py-2 rounded-lg font-bold text-xs border-2 transition-all cursor-pointer {{ request()->routeIs('customers.*') ? 'bg-[#18181B] text-[#FAF8F5] border-[#18181B] shadow-[2px_2px_0px_#18181B]' : 'text-[#18181B] border-transparent hover:border-[#18181B] hover:bg-[#F4F4F5] hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[2px_2px_0px_#18181B] active:translate-x-0.5 active:translate-y-0.5' }}">
                         <i class="bi bi-people"></i>
                         <span>Pelanggan</span>
                     </a>
-                    <a href="{{ route('invoices.index') }}" class="flex items-center gap-2.5 px-3 py-2 rounded-lg font-bold text-xs border-2 {{ request()->routeIs('invoices.*') ? 'bg-[#18181B] text-[#FAF8F5] border-[#18181B]' : 'text-[#18181B] border-transparent' }}">
+                    <a href="{{ route('invoices.index') }}" class="flex items-center gap-2.5 px-3 py-2 rounded-lg font-bold text-xs border-2 transition-all cursor-pointer {{ request()->routeIs('invoices.*') ? 'bg-[#18181B] text-[#FAF8F5] border-[#18181B] shadow-[2px_2px_0px_#18181B]' : 'text-[#18181B] border-transparent hover:border-[#18181B] hover:bg-[#F4F4F5] hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[2px_2px_0px_#18181B] active:translate-x-0.5 active:translate-y-0.5' }}">
                         <i class="bi bi-receipt"></i>
                         <span>Tagihan</span>
                     </a>
                     @if(auth()->user()->isAdministratorRole())
-                        <a href="{{ route('users.index') }}" class="flex items-center gap-2.5 px-3 py-2 rounded-lg font-bold text-xs border-2 {{ request()->routeIs('users.*') ? 'bg-[#18181B] text-[#FAF8F5] border-[#18181B]' : 'text-[#18181B] border-transparent' }}">
+                        <a href="{{ route('users.index') }}" class="flex items-center gap-2.5 px-3 py-2 rounded-lg font-bold text-xs border-2 transition-all cursor-pointer {{ request()->routeIs('users.*') ? 'bg-[#18181B] text-[#FAF8F5] border-[#18181B] shadow-[2px_2px_0px_#18181B]' : 'text-[#18181B] border-transparent hover:border-[#18181B] hover:bg-[#F4F4F5] hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[2px_2px_0px_#18181B] active:translate-x-0.5 active:translate-y-0.5' }}">
                             <i class="bi bi-person-gear"></i>
                             <span>Kelola User</span>
                         </a>
@@ -139,7 +139,7 @@
                     <p class="text-xs font-bold text-[#18181B] truncate">{{ auth()->user()->name }}</p>
                     <form action="{{ route('logout.terminate') }}" method="POST" class="mt-2">
                         @csrf
-                        <button type="submit" class="w-full py-1.5 rounded-lg bg-[#FFFFFF] text-[#DC2626] font-bold text-xs border-2 border-[#DC2626]">
+                        <button type="submit" class="w-full py-1.5 rounded-lg bg-[#FFFFFF] text-[#DC2626] font-bold text-xs border-2 border-[#DC2626] shadow-[2px_2px_0px_#DC2626] hover:bg-[#FEF2F2] hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[3px_3px_0px_#DC2626] active:translate-x-0.5 active:translate-y-0.5 active:shadow-[1px_1px_0px_#DC2626] transition-all cursor-pointer">
                             Keluar
                         </button>
                     </form>
@@ -152,7 +152,7 @@
             <!-- Top Navbar Header -->
             <header class="w-full bg-[#FFFFFF] border-b-2 border-[#18181B] px-4 sm:px-6 py-3.5 flex items-center justify-between sticky top-0 z-20">
                 <div class="flex items-center gap-3">
-                    <button type="button" id="openMobileMenu" class="md:hidden p-1.5 rounded-lg border-2 border-[#18181B] text-[#18181B]">
+                    <button type="button" id="openMobileMenu" class="md:hidden p-1.5 rounded-lg border-2 border-[#18181B] text-[#18181B] shadow-[2px_2px_0px_#18181B] hover:bg-[#F4F4F5] hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[3px_3px_0px_#18181B] active:translate-x-0.5 active:translate-y-0.5 active:shadow-[1px_1px_0px_#18181B] transition-all cursor-pointer">
                         <i class="bi bi-list text-xl"></i>
                     </button>
                     <h2 class="text-base sm:text-lg font-extrabold uppercase tracking-tight text-[#18181B]">
@@ -168,22 +168,28 @@
             <!-- Main Content Area -->
             <main class="flex-1 p-4 sm:p-6 lg:p-8">
                 <div class="max-w-7xl mx-auto space-y-6">
-                    <!-- Alert Notifikasi Flash Session -->
+                    <!-- Alert Notifikasi Flash Session (Auto-dismiss setelah 3.5 detik) -->
                     @if (session('success'))
-                        <div class="p-4 rounded-xl border-2 border-[#059669] bg-[#ECFDF5] shadow-[3px_3px_0px_#059669] flex items-start gap-3">
-                            <i class="bi bi-check-circle-fill text-base text-[#059669] mt-0.5"></i>
-                            <div class="flex-1">
+                        <div data-auto-dismiss-alert="3500" class="p-4 rounded-xl border-2 border-[#059669] bg-[#ECFDF5] shadow-[3px_3px_0px_#059669] flex items-center justify-between gap-3 transition-all duration-300">
+                            <div class="flex items-center gap-3">
+                                <i class="bi bi-check-circle-fill text-base text-[#059669]"></i>
                                 <p class="text-xs font-bold text-[#065F46]">{{ session('success') }}</p>
                             </div>
+                            <button type="button" data-dismiss-button aria-label="Tutup notifikasi" class="text-[#059669] hover:text-[#065F46] p-1 rounded-lg focus:outline-none hover:bg-black/5 hover:-translate-x-0.5 hover:-translate-y-0.5 active:translate-x-0.5 active:translate-y-0.5 transition-all cursor-pointer">
+                                <i class="bi bi-x-lg text-xs font-bold"></i>
+                            </button>
                         </div>
                     @endif
 
                     @if (session('error'))
-                        <div class="p-4 rounded-xl border-2 border-[#DC2626] bg-[#FEF2F2] shadow-[3px_3px_0px_#DC2626] flex items-start gap-3">
-                            <i class="bi bi-exclamation-triangle-fill text-base text-[#DC2626] mt-0.5"></i>
-                            <div class="flex-1">
+                        <div data-auto-dismiss-alert="3500" class="p-4 rounded-xl border-2 border-[#DC2626] bg-[#FEF2F2] shadow-[3px_3px_0px_#DC2626] flex items-center justify-between gap-3 transition-all duration-300">
+                            <div class="flex items-center gap-3">
+                                <i class="bi bi-exclamation-triangle-fill text-base text-[#DC2626]"></i>
                                 <p class="text-xs font-bold text-[#991B1B]">{{ session('error') }}</p>
                             </div>
+                            <button type="button" data-dismiss-button aria-label="Tutup notifikasi" class="text-[#DC2626] hover:text-[#991B1B] p-1 rounded-lg focus:outline-none hover:bg-black/5 hover:-translate-x-0.5 hover:-translate-y-0.5 active:translate-x-0.5 active:translate-y-0.5 transition-all cursor-pointer">
+                                <i class="bi bi-x-lg text-xs font-bold"></i>
+                            </button>
                         </div>
                     @endif
 
@@ -192,30 +198,5 @@
             </main>
         </div>
     </div>
-
-    <!-- Script Drawer Mobile Sidebar -->
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            const openBtn = document.getElementById('openMobileMenu');
-            const closeBtn = document.getElementById('closeMobileMenu');
-            const mobileSidebar = document.getElementById('mobileSidebar');
-            const backdrop = document.getElementById('mobileBackdrop');
-
-            function toggleDrawer(open) {
-                if (!mobileSidebar || !backdrop) return;
-                if (open) {
-                    backdrop.classList.remove('hidden');
-                    mobileSidebar.classList.remove('-translate-x-full');
-                } else {
-                    backdrop.classList.add('hidden');
-                    mobileSidebar.classList.add('-translate-x-full');
-                }
-            }
-
-            if (openBtn) openBtn.addEventListener('click', () => toggleDrawer(true));
-            if (closeBtn) closeBtn.addEventListener('click', () => toggleDrawer(false));
-            if (backdrop) backdrop.addEventListener('click', () => toggleDrawer(false));
-        });
-    </script>
 </body>
 </html>

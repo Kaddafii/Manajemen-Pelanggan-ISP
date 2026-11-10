@@ -280,3 +280,10 @@ Aturan di bagian ini bersifat **wajib** dan berlaku untuk setiap AI/asisten/agen
 
 1. AI **dilarang** mengubah, mengurangi, atau menafsirkan ulang isi bagian A dan B.
 2. Jika ada bagian spesifikasi yang kurang jelas, AI harus **bertanya kepada pengguna** terlebih dahulu dan tidak boleh berasumsi sendiri.
+
+### C.6 Pemisahan File Script (JavaScript)
+
+1. Seluruh kode JavaScript/script **dilarang ditulis secara inline di dalam file Blade** (`.blade.php`).
+2. Script harus memiliki file terpisah (misalnya di dalam folder `resources/js/` atau modul `.js` khusus) dan tidak bercampur dengan template Blade.
+3. File Blade hanya bertugas memanggil atau mengikutsertakan file script tersebut.
+

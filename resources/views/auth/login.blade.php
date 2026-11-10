@@ -114,7 +114,7 @@
                 <div class="pt-2">
                     <button 
                         type="submit" 
-                        class="w-full inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl bg-[#18181B] text-[#FAF8F5] font-bold text-sm uppercase tracking-wider border-2 border-[#18181B] shadow-[4px_4px_0px_#18181B] hover:shadow-[5px_5px_0px_#18181B] hover:-translate-x-0.5 hover:-translate-y-0.5 active:translate-x-1 active:translate-y-1 active:shadow-[1px_1px_0px_#18181B] transition-all cursor-pointer"
+                        class="w-full inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl bg-[#18181B] text-[#FAF8F5] font-bold text-sm uppercase tracking-wider border-2 border-[#18181B] shadow-[3px_3px_0px_#18181B] hover:bg-[#27272A] hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[4px_4px_0px_#18181B] active:translate-x-0.5 active:translate-y-0.5 active:shadow-[1px_1px_0px_#18181B] transition-all cursor-pointer"
                     >
                         <span>Masuk</span>
                         <i class="bi bi-box-arrow-in-right text-base font-bold"></i>
@@ -131,8 +131,9 @@
                 <div class="grid grid-cols-2 gap-2 text-xs">
                     <button 
                         type="button" 
-                        onclick="fillDemoCredentials('admin@isp.com', 'password123')"
-                        class="p-2 rounded-lg bg-[#FAF8F5] border-2 border-[#18181B] text-left hover:bg-[#F4F4F5] transition-all cursor-pointer shadow-[2px_2px_0px_#18181B]"
+                        data-demo-email="admin@isp.com"
+                        data-demo-password="password123"
+                        class="p-2.5 rounded-xl bg-[#FAF8F5] border-2 border-[#18181B] text-left shadow-[2px_2px_0px_#18181B] hover:bg-[#F4F4F5] hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[3px_3px_0px_#18181B] active:translate-x-0.5 active:translate-y-0.5 active:shadow-[1px_1px_0px_#18181B] transition-all cursor-pointer"
                     >
                         <p class="font-bold text-[#18181B]">Admin</p>
                         <p class="text-[10px] text-[#71717A] truncate">admin@isp.com</p>
@@ -140,8 +141,9 @@
 
                     <button 
                         type="button" 
-                        onclick="fillDemoCredentials('staff@isp.com', 'password123')"
-                        class="p-2 rounded-lg bg-[#FAF8F5] border-2 border-[#18181B] text-left hover:bg-[#F4F4F5] transition-all cursor-pointer shadow-[2px_2px_0px_#18181B]"
+                        data-demo-email="staff@isp.com"
+                        data-demo-password="password123"
+                        class="p-2.5 rounded-xl bg-[#FAF8F5] border-2 border-[#18181B] text-left shadow-[2px_2px_0px_#18181B] hover:bg-[#F4F4F5] hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[3px_3px_0px_#18181B] active:translate-x-0.5 active:translate-y-0.5 active:shadow-[1px_1px_0px_#18181B] transition-all cursor-pointer"
                     >
                         <p class="font-bold text-[#18181B]">Staff</p>
                         <p class="text-[10px] text-[#71717A] truncate">staff@isp.com</p>
@@ -151,32 +153,4 @@
 
         </div>
     </div>
-
-    <!-- Script Tampilkan Password & Isi Akun Pengujian -->
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            const togglePasswordButton = document.getElementById('togglePasswordButton');
-            const passwordInput = document.getElementById('password');
-            const togglePasswordIcon = document.getElementById('togglePasswordIcon');
-
-            if (togglePasswordButton && passwordInput && togglePasswordIcon) {
-                togglePasswordButton.addEventListener('click', function () {
-                    const isPasswordType = passwordInput.getAttribute('type') === 'password';
-                    passwordInput.setAttribute('type', isPasswordType ? 'text' : 'password');
-                    togglePasswordIcon.className = isPasswordType ? 'bi bi-eye-slash text-base' : 'bi bi-eye text-base';
-                });
-            }
-        });
-
-        function fillDemoCredentials(email, password) {
-            const emailInput = document.getElementById('email');
-            const passwordInput = document.getElementById('password');
-
-            if (emailInput && passwordInput) {
-                emailInput.value = email;
-                passwordInput.value = password;
-                emailInput.focus();
-            }
-        }
-    </script>
 </x-guest-layout>
