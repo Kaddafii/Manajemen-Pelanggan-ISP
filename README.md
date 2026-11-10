@@ -1,58 +1,267 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Manajemen Pelanggan ISP
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Aplikasi web manajemen pelanggan internet dan penagihan (billing) untuk penyedia layanan internet (ISP). Aplikasi ini dibangun menggunakan Laravel, Tailwind CSS, dan MySQL dengan mengusung antarmuka tactile neo-retro surface.
 
-## About Laravel
+---
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## 📌 Daftar Isi
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+1. [Fitur Utama](#-fitur-utama)
+2. [Hak Akses Pengguna](#-hak-akses-pengguna)
+3. [Persyaratan Sistem](#-persyaratan-sistem)
+4. [Panduan Instalasi](#-panduan-instalasi)
+5. [Akun Pengujian (Default Credentials)](#-akun-pengujian-default-credentials)
+6. [Menjalankan Pengujian Otomatis (Testing)](#-menjalankan-pengujian-otomatis-testing)
+7. [Struktur Proyek](#-struktur-proyek)
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+---
 
-## Learning Laravel
+## 🚀 Fitur Utama
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+- **Desain Antarmuka Tactile Neo-Retro Surface**:
+  - Tampilan custom berkarakter tactile dengan palet *warm paper* (`#FAF8F5`), border solid (`#18181B`), dan bayangan tegas (*hard shadows*).
+  - Dilengkapi interaksi transisi mikro tactile (*hover shift* & *active press*) pada seluruh tombol, kartu, dan komponen interaktif.
+  - Komponen dropdown select custom dengan dukungan kotak pencarian real-time (*searchable*), indikator status berwarna, navigasi keyboard, dan auto-submit filter.
+  - Auto-dismiss flash alert yang menghilang secara otomatis setelah 4 detik atau saat ditutup manual.
+  - Tampilan waktu pada seluruh tanggal menggunakan format waktu Indonesia Barat (**WIB / Asia/Jakarta**).
 
-In addition, [Laracasts](https://laracasts.com) contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+- **Modul Autentikasi**:
+  - Login aman berbasis email dan password.
+  - Fitur *Remember Me* untuk mempertahankan sesi login pengguna.
+  - Pengalihan cerdas berbasis peran (*role-based redirect*): Administrator diarahkan ke Dashboard, Staff diarahkan ke Pelanggan.
 
-You can also watch bite-sized lessons with real-world projects on [Laravel Learn](https://laravel.com/learn), where you will be guided through building a Laravel application from scratch while learning PHP fundamentals.
+- **Modul Dashboard (Khusus Administrator)**:
+  - 5 Kartu Metrik Ringkasan Bisnis: Total Pelanggan, Pelanggan Aktif, Pelanggan Suspend, Pelanggan Putus, dan Tagihan Belum Bayar.
+  - Grafik Batang Interaktif (*Monthly Billing Bar Chart*): Visualisasi rekapitulasi nominal tagihan bulanan beserta tooltip nominal mata uang rupiah.
 
-## Agentic Development
+- **Modul Pelanggan**:
+  - Manajemen data pelanggan lengkap (Nama, Nomor Telepon, Alamat, Paket Internet, Harga Paket, Status Pelanggan).
+  - Status pelanggan: **Aktif**, **Suspend**, **Putus**.
+  - Pencarian data pelanggan (*search*) secara instan.
+  - Pengurutan data (*sorting*) multi-kolom yang dinamis (Nama, Paket, Harga, Status).
+  - Navigasi halaman bertema (*tactile pagination*).
+  - Penghapusan aman menggunakan **Soft Delete** Laravel (hanya dapat dilakukan oleh Administrator).
 
-Laravel's predictable structure and conventions make it ideal for AI coding agents like Claude Code, Cursor, and GitHub Copilot. Install [Laravel Boost](https://laravel.com/docs/ai) to supercharge your AI workflow:
+- **Modul Tagihan (Billing)**:
+  - Pencatatan tagihan pelanggan dengan dukungan multi-tagihan per pelanggan.
+  - Struktur data: Pelanggan, Periode Tagihan (`YYYY-MM`), Nominal Tagihan, Status Pembayaran, Tanggal Pembayaran.
+  - Status pembayaran: **Belum Bayar** dan **Lunas**.
+  - Dropdown pilih pelanggan dilengkapi kotak pencarian (*searchbar*) untuk kemudahan saat data pelanggan berjumlah banyak.
+  - Tombol aksi bayar cepat yang secara otomatis mengubah status menjadi **Lunas** dan mencatat timestamp tanggal bayar waktu nyata (**WIB**).
 
+- **Modul Kelola User (Khusus Administrator)**:
+  - Manajemen akun staf dan administrator (Nama, Email, Role, Tanggal Dibuat).
+  - Penggantian kata sandi aman dengan opsi melihat kata sandi (*toggle show/hide password*).
+  - Proteksi *Self-Deletion Lockout*: Administrator tidak dapat menghapus akunnya sendiri yang sedang aktif digunakan.
+
+---
+
+## 👥 Hak Akses Pengguna
+
+| Fitur / Menu | Administrator | Staff |
+| :--- | :---: | :---: |
+| **Melihat Dashboard & Grafik** | ✅ Ya | ❌ Tidak |
+| **Melihat Daftar Pelanggan** | ✅ Ya | ✅ Ya |
+| **Menambah Data Pelanggan** | ✅ Ya | ✅ Ya |
+| **Mengubah Data Pelanggan** | ✅ Ya | ✅ Ya |
+| **Menghapus Pelanggan (Soft Delete)** | ✅ Ya | ❌ Tidak |
+| **Melihat Daftar Tagihan** | ✅ Ya | ✅ Ya |
+| **Menambah Tagihan Pelanggan** | ✅ Ya | ❌ Tidak |
+| **Melakukan Pembayaran Tagihan** | ✅ Ya | ❌ Tidak |
+| **Kelola Data Pengguna (User)** | ✅ Ya | ❌ Tidak |
+
+---
+
+## 💻 Persyaratan Sistem
+
+Pastikan lingkungan lokal Anda memenuhi spesifikasi berikut:
+
+- **PHP**: Versi `^8.2` atau `^8.3` (dengan ekstensi: `pdo_mysql`, `mbstring`, `openssl`, `curl`)
+- **Composer**: Versi `^2.x`
+- **Node.js**: Versi `^18.x` atau `^20.x` & **npm**
+- **Database Server**: MySQL `^8.0` atau MariaDB `^10.4` (misal via XAMPP, Laragon, Docker, atau instalasi native)
+
+---
+
+## 🛠️ Panduan Instalasi
+
+Ikuti langkah-langkah di bawah ini untuk memasang dan menjalankan aplikasi dari awal:
+
+### 1. Masuk ke Direktori Proyek
+Buka terminal / PowerShell dan arahkan ke folder proyek:
 ```bash
-composer require laravel/boost --dev
-
-php artisan boost:install
+cd "d:/Manajemen Pelanggan ISP/Manajemen-Pelanggan-ISP"
 ```
 
-Boost provides your agent 15+ tools and skills that help agents build Laravel applications while following best practices.
+### 2. Pasang Dependensi PHP (Composer)
+```bash
+composer install
+```
 
-## Contributing
+### 3. Pasang Dependensi Frontend (NPM)
+```bash
+npm install
+```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+### 4. Konfigurasi Environment File
+Salin file `.env.example` menjadi `.env`:
+- **Windows (PowerShell):**
+  ```powershell
+  copy .env.example .env
+  ```
+- **Linux / macOS:**
+  ```bash
+  cp .env.example .env
+  ```
 
-## Code of Conduct
+### 5. Generate Application Encryption Key
+```bash
+php artisan key:generate
+```
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+### 6. Konfigurasi Database
+Buka file `.env` pada teks editor Anda, sesuaikan konfigurasi koneksi database MySQL:
+```ini
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=manajemen_pelanggan_isp
+DB_USERNAME=root
+DB_PASSWORD=
+APP_TIMEZONE=Asia/Jakarta
+```
 
-## Security Vulnerabilities
+> **Catatan:** Pastikan database dengan nama `manajemen_pelanggan_isp` telah dibuat di MySQL server Anda sebelum menjalankan langkah berikutnya.
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+### 7. Jalankan Migrasi dan Database Seeder
+Jalankan perintah migrasi tabel basis data beserta pengisian data awal (*seeder*):
+```bash
+php artisan migrate --seed
+```
 
-## License
+Perintah di atas akan secara otomatis mengeksekusi migrasi tabel dan mengisi data seeder:
+- 2 Akun Pengguna (`Administrator` dan `Staff`).
+- 25+ Data Pelanggan ISP dengan ragam paket dan status (untuk pengujian fitur pencarian, filter, dan pagination).
+- Data Tagihan Pelanggan dengan berbagai periode bulan dan status pembayaran.
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+### 8. Kompilasi Aset Frontend (Tailwind CSS & JavaScript)
+- **Untuk Produksi (Disarankan):**
+  ```bash
+  npm run build
+  ```
+- **Untuk Pengembangan (Hot Reloading):**
+  ```bash
+  npm run dev
+  ```
+
+### 9. Jalankan Web Server Lokal
+Jalankan development server Laravel:
+```bash
+php artisan serve
+```
+
+Aplikasi siap diakses melalui peramban web pada alamat:
+👉 **`http://127.0.0.1:8000`**
+
+---
+
+## 🔑 Akun Pengujian (Default Credentials)
+
+Gunakan akun berikut untuk masuk dan menguji seluruh hak akses sistem:
+
+### 1. Akun Administrator
+- **Email:** `admin@isp.com`
+- **Password:** `password`
+- **Akses:** Akses penuh ke seluruh menu (Dashboard, Pelanggan, Tagihan, Kelola User, Hapus Data).
+
+### 2. Akun Staff
+- **Email:** `staff@isp.com`
+- **Password:** `password`
+- **Akses:** Terbatas untuk melihat dan mengelola data Pelanggan serta melihat Tagihan. Tidak memiliki hak akses Dashboard, Hapus Data, Pembayaran Tagihan, maupun Kelola User.
+
+---
+
+## 🧪 Menjalankan Pengujian Otomatis (Testing)
+
+Aplikasi telah dilengkapi dengan pengujian unit dan fitur komprehensif menggunakan PHPUnit:
+
+```bash
+php artisan test
+```
+
+Cakupan pengujian otomatis meliputi:
+- `CustomerManagementTest`: Autentikasi pelanggan, pencarian, sorting, validasi form, pengubahan data, dan soft delete.
+- `InvoiceManagementTest`: Akses tagihan, filter status, pencarian, otorisasi bayar tagihan Administrator vs Staff.
+- `UserManagementTest`: Proteksi akses Administrator, CRUD user, filter role, dan pencegahan hapus akun sendiri (*self-deletion lockout*).
+- `UserAuthenticationTest`: Pengujian login, invalid credentials, remember me cookie persistence, dan logout.
+- `MasterLayoutAndAuthorizationTest`: Pengujian navigasi role-based, proteksi rute, dan keterlihatan menu sidebar.
+- `DashboardOverviewTest`: Verifikasi perhitungan metrik agregasi bisnis dan visualisasi grafik tagihan.
+
+---
+
+## 📁 Struktur Proyek
+
+```text
+├── app/
+│   ├── Http/
+│   │   ├── Controllers/
+│   │   │   ├── CustomerManagementController.php
+│   │   │   ├── DashboardOverviewController.php
+│   │   │   ├── InvoiceManagementController.php
+│   │   │   ├── UserAuthenticationController.php
+│   │   │   └── UserManagementController.php
+│   │   ├── Middleware/
+│   │   │   └── EnsureUserHasRole.php
+│   │   └── Requests/
+│   │       ├── CustomerStoreRequest.php
+│   │       ├── CustomerUpdateRequest.php
+│   │       ├── InvoiceStoreRequest.php
+│   │       ├── UserStoreRequest.php
+│   │       └── UserUpdateRequest.php
+│   └── Models/
+│       ├── Customer.php
+│       ├── Invoice.php
+│       └── User.php
+├── database/
+│   ├── migrations/
+│   │   ├── 0001_01_01_000000_create_users_table.php
+│   │   ├── 2026_03_18_000001_create_customers_table.php
+│   │   └── 2026_03_18_000002_create_invoices_table.php
+│   └── seeders/
+│       ├── CustomerSeeder.php
+│       ├── DatabaseSeeder.php
+│       ├── InvoiceSeeder.php
+│       └── UserSeeder.php
+├── resources/
+│   ├── js/
+│   │   ├── app.js
+│   │   ├── components/
+│   │   │   ├── alert.js
+│   │   │   ├── dropdown.js
+│   │   │   └── mobile-nav.js
+│   │   ├── customers/
+│   │   │   └── delete-modal.js
+│   │   ├── invoices/
+│   │   │   ├── create.js
+│   │   │   └── payment.js
+│   │   └── users/
+│   │       ├── delete-modal.js
+│   │       └── password-toggle.js
+│   └── views/
+│       ├── auth/
+│       │   └── login.blade.php
+│       ├── components/
+│       │   ├── tactile-alert.blade.php
+│       │   └── tactile-select.blade.php
+│       ├── customers/
+│       ├── dashboard/
+│       ├── invoices/
+│       ├── layouts/
+│       │   ├── app.blade.php
+│       │   └── guest.blade.php
+│       └── users/
+├── routes/
+│   └── web.php
+└── tests/
+    └── Feature/
+```

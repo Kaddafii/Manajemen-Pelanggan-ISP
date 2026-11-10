@@ -117,19 +117,10 @@
                                     {{ $loop->iteration + ($users->currentPage() - 1) * $users->perPage() }}
                                 </td>
                                 <td class="py-3 px-4">
-                                    <div class="flex items-center gap-2">
-                                        <div class="w-7 h-7 rounded-lg bg-[#FAF8F5] border-2 border-[#18181B] text-[#18181B] flex items-center justify-center font-extrabold text-[11px] shadow-[1px_1px_0px_#18181B]">
-                                            {{ strtoupper(substr($user->name, 0, 1)) }}
-                                        </div>
-                                        <div>
-                                            <p class="font-bold text-[#18181B]">
-                                                {{ $user->name }}
-                                                @if(auth()->id() === $user->id)
-                                                    <span class="text-[10px] text-[#71717A] font-semibold">(Anda)</span>
-                                                @endif
-                                            </p>
-                                        </div>
-                                    </div>
+                                    <span class="font-bold text-[#18181B]">{{ $user->name }}</span>
+                                    @if(auth()->id() === $user->id)
+                                        <span class="text-[10px] text-[#71717A] font-semibold ml-1">(Anda)</span>
+                                    @endif
                                 </td>
                                 <td class="py-3 px-4 font-semibold text-[#18181B]">
                                     {{ $user->email }}
@@ -145,8 +136,15 @@
                                         </span>
                                     @endif
                                 </td>
-                                <td class="py-3 px-4 text-center text-[11px] text-[#71717A] font-medium">
-                                    {{ $user->created_at ? $user->created_at->format('d/m/Y H:i') : '-' }}
+                                <td class="py-3 px-4 text-center text-[11px] text-[#71717A] font-medium whitespace-nowrap">
+                                    <div class="flex flex-col items-center">
+                                        <span class="font-bold text-[#18181B]">{{ $user->created_at ? $user->created_at->timezone('Asia/Jakarta')->format('d/m/Y H:i') . ' WIB' : '-' }}</span>
+                                        @if ($user->updated_at && $user->created_at && $user->updated_at->diffInSeconds($user->created_at) > 5)
+                                            <span class="text-[10px] text-[#71717A] mt-0.5" title="Waktu terakhir data diperbarui">
+                                                (Diperbarui: {{ $user->updated_at->timezone('Asia/Jakarta')->format('d/m/Y H:i') }} WIB)
+                                            </span>
+                                        @endif
+                                    </div>
                                 </td>
                                 <td class="py-3 px-4 text-center">
                                     <div class="inline-flex items-center gap-2">

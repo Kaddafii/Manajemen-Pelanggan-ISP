@@ -141,8 +141,12 @@
                                         </span>
                                     @endif
                                 </td>
-                                <td class="py-3 px-4 text-center text-[11px] text-[#71717A] font-medium">
-                                    {{ $invoice->payment_date ? $invoice->payment_date->format('d/m/Y H:i') : '-' }}
+                                <td class="py-3 px-4 text-center text-[11px] whitespace-nowrap">
+                                    @if ($invoice->payment_date)
+                                        <span class="font-bold text-[#18181B]">{{ $invoice->payment_date->timezone('Asia/Jakarta')->format('d/m/Y H:i') . ' WIB' }}</span>
+                                    @else
+                                        <span class="font-medium text-[#71717A]">-</span>
+                                    @endif
                                 </td>
                                 <td class="py-3 px-4 text-center">
                                     @if ($invoice->isUnpaidStatus())

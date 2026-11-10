@@ -25,10 +25,7 @@
                         <i class="bi bi-router text-xl"></i>
                     </div>
                     <div class="min-w-0">
-                        <h1 class="text-sm font-extrabold uppercase tracking-tight truncate">ISP Manajemen</h1>
-                        <span class="text-[11px] font-bold px-2 py-0.5 rounded-full border border-[#18181B] inline-block mt-0.5 {{ auth()->user()->isAdministratorRole() ? 'bg-[#18181B] text-white' : 'bg-[#E4E4E7] text-[#18181B]' }}">
-                            {{ auth()->user()->role }}
-                        </span>
+                        <h1 class="text-sm font-extrabold uppercase tracking-tight truncate">MANAJEMEN ISP</h1>
                     </div>
                 </div>
 
@@ -77,9 +74,14 @@
 
                 <!-- Footer Sidebar (User Info & Logout) -->
                 <div class="p-4 border-t-2 border-[#18181B] bg-[#FFFFFF] space-y-3">
-                    <div class="px-1">
-                        <p class="text-xs font-bold text-[#18181B] truncate">{{ auth()->user()->name }}</p>
-                        <p class="text-[11px] text-[#71717A] truncate">{{ auth()->user()->email }}</p>
+                    <div class="flex items-center justify-between gap-2 px-1">
+                        <div class="min-w-0 flex-1">
+                            <p class="text-xs font-bold text-[#18181B] truncate">{{ auth()->user()->name }}</p>
+                            <p class="text-[11px] text-[#71717A] truncate">{{ auth()->user()->email }}</p>
+                        </div>
+                        <span class="text-[10px] font-extrabold px-2 py-0.5 rounded-md border-2 border-[#18181B] shrink-0 {{ auth()->user()->isAdministratorRole() ? 'bg-[#18181B] text-[#FAF8F5]' : 'bg-[#FAF8F5] text-[#18181B]' }}">
+                            {{ auth()->user()->role }}
+                        </span>
                     </div>
 
                     <form action="{{ route('logout.terminate') }}" method="POST">
@@ -105,7 +107,7 @@
                         <div class="w-8 h-8 rounded-lg bg-[#18181B] text-[#FAF8F5] flex items-center justify-center border-2 border-[#18181B]">
                             <i class="bi bi-router text-base"></i>
                         </div>
-                        <span class="text-xs font-bold uppercase tracking-tight">ISP Manajemen</span>
+                        <span class="text-xs font-bold uppercase tracking-tight">MANAJEMEN ISP</span>
                     </div>
                     <button type="button" id="closeMobileMenu" class="p-1.5 rounded-lg border-2 border-[#18181B] bg-[#FFFFFF] shadow-[2px_2px_0px_#18181B] hover:bg-[#F4F4F5] hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[3px_3px_0px_#18181B] active:translate-x-0.5 active:translate-y-0.5 active:shadow-[1px_1px_0px_#18181B] transition-all cursor-pointer">
                         <i class="bi bi-x text-lg"></i>
@@ -136,8 +138,16 @@
                 </nav>
 
                 <div class="p-3 border-t-2 border-[#18181B] bg-[#FFFFFF]">
-                    <p class="text-xs font-bold text-[#18181B] truncate">{{ auth()->user()->name }}</p>
-                    <form action="{{ route('logout.terminate') }}" method="POST" class="mt-2">
+                    <div class="flex items-center justify-between gap-2 mb-2">
+                        <div class="min-w-0 flex-1">
+                            <p class="text-xs font-bold text-[#18181B] truncate">{{ auth()->user()->name }}</p>
+                            <p class="text-[11px] text-[#71717A] truncate">{{ auth()->user()->email }}</p>
+                        </div>
+                        <span class="text-[10px] font-extrabold px-2 py-0.5 rounded-md border-2 border-[#18181B] shrink-0 {{ auth()->user()->isAdministratorRole() ? 'bg-[#18181B] text-[#FAF8F5]' : 'bg-[#FAF8F5] text-[#18181B]' }}">
+                            {{ auth()->user()->role }}
+                        </span>
+                    </div>
+                    <form action="{{ route('logout.terminate') }}" method="POST">
                         @csrf
                         <button type="submit" class="w-full py-1.5 rounded-lg bg-[#FFFFFF] text-[#DC2626] font-bold text-xs border-2 border-[#DC2626] shadow-[2px_2px_0px_#DC2626] hover:bg-[#FEF2F2] hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[3px_3px_0px_#DC2626] active:translate-x-0.5 active:translate-y-0.5 active:shadow-[1px_1px_0px_#DC2626] transition-all cursor-pointer">
                             Keluar
@@ -158,10 +168,6 @@
                     <h2 class="text-base sm:text-lg font-extrabold uppercase tracking-tight text-[#18181B]">
                         {{ $header ?? 'Dashboard' }}
                     </h2>
-                </div>
-
-                <div class="text-xs font-bold text-[#71717A]">
-                    {{ auth()->user()->name }}
                 </div>
             </header>
 
