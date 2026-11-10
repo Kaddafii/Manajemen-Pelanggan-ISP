@@ -10,10 +10,12 @@ use Illuminate\Support\Facades\Route;
 | Seluruh rute didefinisikan secara eksplisit sesuai ketentuan spesifikasi.
 */
 
-// Rute Pengalihan Awal
+// Rute Pengalihan Awal Berdasarkan Status Login & Role
 Route::get('/', function () {
     if (auth()->check()) {
-        return redirect()->route('dashboard.index');
+        return auth()->user()->isAdministratorRole()
+            ? redirect()->route('dashboard.index')
+            : redirect()->route('customers.index');
     }
 
     return redirect()->route('login.form');
@@ -33,8 +35,23 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/logout', [UserAuthenticationController::class, 'terminateUserSession'])
         ->name('logout.terminate');
 
-    // Halaman Dashboard Utama (Placeholder sementara sebelum modul dashboard dibangun)
-    Route::get('/dashboard', function () {
-        return view('dashboard.index');
-    })->name('dashboard.index');
+    // Grup Rute Khusus Administrator
+    Route::middleware(['role.administrator'])->group(function () {
+        Route::get('/dashboard', function () {
+            return view('dashboard.index');
+        })->name('dashboard.index');
+
+        Route::get('/users', function () {
+            return view('users.index');
+        })->name('users.index');
+    });
+
+    // Grup Rute Bersama (Administrator & Staff)
+    Route::get('/customers', function () {
+        return view('customers.index');
+    })->name('customers.index');
+
+    Route::get('/invoices', function () {
+        return view('invoices.index');
+    })->name('invoices.index');
 });

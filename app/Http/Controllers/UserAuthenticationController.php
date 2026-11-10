@@ -18,7 +18,9 @@ class UserAuthenticationController extends Controller
     public function showLoginForm(): View|RedirectResponse
     {
         if (Auth::check()) {
-            return redirect()->route('dashboard.index');
+            return Auth::user()->isAdministratorRole()
+                ? redirect()->route('dashboard.index')
+                : redirect()->route('customers.index');
         }
 
         return view('auth.login');
@@ -42,7 +44,11 @@ class UserAuthenticationController extends Controller
         if (Auth::attempt($credentials, $rememberUserSession)) {
             $request->session()->regenerate();
 
-            return redirect()->intended(route('dashboard.index'));
+            $targetRoute = Auth::user()->isAdministratorRole()
+                ? route('dashboard.index')
+                : route('customers.index');
+
+            return redirect()->intended($targetRoute);
         }
 
         return back()

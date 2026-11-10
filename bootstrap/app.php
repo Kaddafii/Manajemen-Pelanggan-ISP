@@ -11,7 +11,9 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware): void {
-        //
+        $middleware->alias([
+            'role.administrator' => \App\Http\Middleware\EnsureUserHasAdministratorRole::class,
+        ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         //
