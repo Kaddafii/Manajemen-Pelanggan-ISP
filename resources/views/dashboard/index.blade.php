@@ -79,16 +79,44 @@
                 </h3>
             </div>
 
-            <!-- Area Tampilan Grafik / Empty State Data -->
-            <div class="h-64 flex flex-col items-center justify-center bg-[#FAF8F5] border-2 border-dashed border-[#18181B] rounded-xl p-6 text-center">
-                <div class="w-12 h-12 rounded-xl bg-[#FFFFFF] border-2 border-[#18181B] flex items-center justify-center text-[#71717A] mb-3 shadow-[2px_2px_0px_#18181B]">
-                    <i class="bi bi-bar-chart-line text-2xl"></i>
+            @if(isset($monthlyInvoices) && $monthlyInvoices->isNotEmpty())
+                @php
+                    $maxCount = max($monthlyInvoices->pluck('total_count')->toArray() ?: [1]);
+                @endphp
+                <div class="pt-4 pb-2">
+                    <div class="h-64 flex items-end justify-around gap-4 sm:gap-8 px-4 sm:px-8 border-b-2 border-l-2 border-[#18181B] bg-[#FAF8F5] rounded-bl-xl p-4">
+                        @foreach ($monthlyInvoices as $item)
+                            @php
+                                $percentage = round(($item->total_count / $maxCount) * 100);
+                            @endphp
+                            <div class="flex-1 max-w-[100px] flex flex-col items-center gap-2 group h-full justify-end">
+                                <span class="text-xs font-black text-[#18181B] bg-[#FFFFFF] border-2 border-[#18181B] px-2 py-0.5 rounded-md shadow-[1px_1px_0px_#18181B] group-hover:-translate-y-0.5 transition-all">
+                                    {{ $item->total_count }}
+                                </span>
+                                <div 
+                                    class="w-full bg-[#18181B] border-2 border-[#18181B] rounded-t-lg shadow-[2px_2px_0px_#18181B] group-hover:bg-[#27272A] group-hover:-translate-y-0.5 group-hover:shadow-[3px_3px_0px_#18181B] transition-all duration-200 cursor-pointer"
+                                    style="height: {{ max($percentage, 8) }}%;"
+                                    title="{{ $item->billing_period }}: {{ $item->total_count }} tagihan"
+                                ></div>
+                                <span class="text-[11px] font-bold text-[#18181B] text-center truncate max-w-full">
+                                    {{ $item->billing_period }}
+                                </span>
+                            </div>
+                        @endforeach
+                    </div>
                 </div>
-                <p class="text-sm font-bold text-[#18181B]">Belum Ada Data Tagihan</p>
-                <p class="text-xs text-[#71717A] mt-1 max-w-sm">
-                    Grafik pergerakan tagihan bulanan akan otomatis terisi setelah data pelanggan dan tagihan ditambahkan ke sistem.
-                </p>
-            </div>
+            @else
+                <!-- Area Tampilan Grafik / Empty State Data -->
+                <div class="h-64 flex flex-col items-center justify-center bg-[#FAF8F5] border-2 border-dashed border-[#18181B] rounded-xl p-6 text-center">
+                    <div class="w-12 h-12 rounded-xl bg-[#FFFFFF] border-2 border-[#18181B] flex items-center justify-center text-[#71717A] mb-3 shadow-[2px_2px_0px_#18181B]">
+                        <i class="bi bi-bar-chart-line text-2xl"></i>
+                    </div>
+                    <p class="text-sm font-bold text-[#18181B]">Belum Ada Data Tagihan</p>
+                    <p class="text-xs text-[#71717A] mt-1 max-w-sm">
+                        Grafik pergerakan tagihan bulanan akan otomatis terisi setelah data pelanggan dan tagihan ditambahkan ke sistem.
+                    </p>
+                </div>
+            @endif
         </div>
     </div>
 </x-app-layout>

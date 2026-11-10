@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\CustomerManagementController;
 use App\Http\Controllers\DashboardOverviewController;
+use App\Http\Controllers\InvoiceManagementController;
 use App\Http\Controllers\UserAuthenticationController;
 use Illuminate\Support\Facades\Route;
 
@@ -68,7 +69,19 @@ Route::middleware(['auth'])->group(function () {
         ->middleware(['role.administrator'])
         ->name('customers.destroy');
 
-    Route::get('/invoices', function () {
-        return view('invoices.index');
-    })->name('invoices.index');
+    // Modul Tagihan (Melihat Tagihan: Administrator & Staff)
+    Route::get('/invoices', [InvoiceManagementController::class, 'displayInvoiceList'])
+        ->name('invoices.index');
+
+    // Modul Tagihan - Operasi Kelola Tagihan (Khusus Administrator)
+    Route::middleware(['role.administrator'])->group(function () {
+        Route::get('/invoices/create', [InvoiceManagementController::class, 'showInvoiceCreationForm'])
+            ->name('invoices.create');
+
+        Route::post('/invoices', [InvoiceManagementController::class, 'storeNewInvoiceRecord'])
+            ->name('invoices.store');
+
+        Route::patch('/invoices/{invoice}/pay', [InvoiceManagementController::class, 'markInvoiceAsPaid'])
+            ->name('invoices.pay');
+    });
 });

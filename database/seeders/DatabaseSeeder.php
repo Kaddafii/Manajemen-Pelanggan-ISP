@@ -38,5 +38,8 @@ class DatabaseSeeder extends Seeder
 
         // Seeding data awal pelanggan
         $this->call(CustomerSeeder::class);
+
+        // Seeding data tagihan pelanggan
+        $this->call(InvoiceSeeder::class);
     }
 }

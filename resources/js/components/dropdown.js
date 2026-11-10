@@ -1,4 +1,4 @@
-// Inisialisasi komponen kustom dropdown taktil dengan keyboard navigation dan outside click
+// Inisialisasi komponen kustom dropdown taktil dengan keyboard navigation, searchbar, dan auto-submit
 document.addEventListener('DOMContentLoaded', function () {
     const dropdownContainers = document.querySelectorAll('[data-dropdown-container]');
 
@@ -25,21 +25,40 @@ document.addEventListener('DOMContentLoaded', function () {
         const label = container.querySelector('[data-dropdown-label]');
         const arrow = container.querySelector('[data-dropdown-arrow]');
         const triggerDot = container.querySelector('[data-dropdown-trigger-dot]');
+        const searchInput = container.querySelector('[data-dropdown-search]');
+        const noResults = container.querySelector('[data-dropdown-no-results]');
         const items = container.querySelectorAll('[data-dropdown-item]');
 
         if (!trigger || !menu || !input) return;
 
+        function resetSearchFilter() {
+            if (searchInput) {
+                searchInput.value = '';
+                items.forEach(item => {
+                    item.classList.remove('hidden');
+                    item.classList.add('flex');
+                });
+                if (noResults) noResults.classList.add('hidden');
+            }
+        }
+
         function openDropdown() {
             closeAllDropdowns(container);
+            resetSearchFilter();
             menu.classList.remove('hidden');
             trigger.setAttribute('aria-expanded', 'true');
             if (arrow) arrow.classList.add('rotate-180');
+
+            if (searchInput) {
+                setTimeout(() => searchInput.focus(), 60);
+            }
         }
 
         function closeDropdown() {
             menu.classList.add('hidden');
             trigger.setAttribute('aria-expanded', 'false');
             if (arrow) arrow.classList.remove('rotate-180');
+            resetSearchFilter();
         }
 
         function toggleDropdown() {
@@ -54,14 +73,14 @@ document.addEventListener('DOMContentLoaded', function () {
             if (!triggerDot) return;
 
             triggerDot.classList.remove('hidden', 'bg-[#10B981]', 'bg-[#F59E0B]', 'bg-[#EF4444]', 'bg-[#71717A]');
-            if (selectedValue === 'Aktif') {
+            if (selectedValue === 'Aktif' || selectedValue === 'Lunas') {
                 triggerDot.classList.add('bg-[#10B981]');
-            } else if (selectedValue === 'Suspend') {
+            } else if (selectedValue === 'Suspend' || selectedValue === 'Belum Bayar') {
                 triggerDot.classList.add('bg-[#F59E0B]');
             } else if (selectedValue === 'Putus') {
                 triggerDot.classList.add('bg-[#EF4444]');
             } else {
-                triggerDot.classList.add('bg-[#71717A]');
+                triggerDot.classList.add('hidden');
             }
         }
 
@@ -93,19 +112,76 @@ document.addEventListener('DOMContentLoaded', function () {
                 }
             });
 
-            // Dispatch event change pada hidden input
+            // Dispatch event change dan input pada hidden input
             input.dispatchEvent(new Event('change', { bubbles: true }));
             input.dispatchEvent(new Event('input', { bubbles: true }));
 
             closeDropdown();
             trigger.focus();
+
+            // Auto-submit formulir jika atribut data-auto-submit bernilai true
+            if (container.getAttribute('data-auto-submit') === 'true' && input.form) {
+                input.form.submit();
+            }
         }
 
+        // Event listener pada trigger tombol pembuka
         trigger.addEventListener('click', function (e) {
             e.stopPropagation();
             toggleDropdown();
         });
 
+        // Event listener live search filter
+        if (searchInput) {
+            searchInput.addEventListener('click', function (e) {
+                e.stopPropagation();
+            });
+
+            searchInput.addEventListener('input', function () {
+                const query = this.value.toLowerCase().trim();
+                let visibleCount = 0;
+
+                items.forEach(item => {
+                    const labelText = (item.getAttribute('data-label') || '').toLowerCase();
+                    const valueText = (item.getAttribute('data-value') || '').toLowerCase();
+
+                    if (labelText.includes(query) || valueText.includes(query)) {
+                        item.classList.remove('hidden');
+                        item.classList.add('flex');
+                        visibleCount++;
+                    } else {
+                        item.classList.add('hidden');
+                        item.classList.remove('flex');
+                    }
+                });
+
+                if (noResults) {
+                    if (visibleCount === 0) {
+                        noResults.classList.remove('hidden');
+                    } else {
+                        noResults.classList.add('hidden');
+                    }
+                }
+            });
+
+            searchInput.addEventListener('keydown', function (e) {
+                if (e.key === 'ArrowDown') {
+                    e.preventDefault();
+                    const firstVisibleItem = Array.from(items).find(item => !item.classList.contains('hidden'));
+                    if (firstVisibleItem) firstVisibleItem.focus();
+                } else if (e.key === 'Escape') {
+                    e.preventDefault();
+                    closeDropdown();
+                    trigger.focus();
+                } else if (e.key === 'Enter') {
+                    e.preventDefault();
+                    const firstVisibleItem = Array.from(items).find(item => !item.classList.contains('hidden'));
+                    if (firstVisibleItem) selectItem(firstVisibleItem);
+                }
+            });
+        }
+
+        // Event listener setiap item pilihan
         items.forEach((item, index) => {
             item.addEventListener('click', function (e) {
                 e.stopPropagation();
@@ -113,14 +189,21 @@ document.addEventListener('DOMContentLoaded', function () {
             });
 
             item.addEventListener('keydown', function (e) {
+                const visibleItems = Array.from(items).filter(it => !it.classList.contains('hidden'));
+                const currentIndex = visibleItems.indexOf(item);
+
                 if (e.key === 'ArrowDown') {
                     e.preventDefault();
-                    const nextIndex = (index + 1) % items.length;
-                    items[nextIndex].focus();
+                    const nextIndex = (currentIndex + 1) % visibleItems.length;
+                    visibleItems[nextIndex].focus();
                 } else if (e.key === 'ArrowUp') {
                     e.preventDefault();
-                    const prevIndex = (index - 1 + items.length) % items.length;
-                    items[prevIndex].focus();
+                    if (currentIndex === 0 && searchInput) {
+                        searchInput.focus();
+                    } else {
+                        const prevIndex = (currentIndex - 1 + visibleItems.length) % visibleItems.length;
+                        visibleItems[prevIndex].focus();
+                    }
                 } else if (e.key === 'Escape') {
                     e.preventDefault();
                     closeDropdown();
@@ -131,12 +214,15 @@ document.addEventListener('DOMContentLoaded', function () {
             });
         });
 
+        // Navigasi keyboard pada trigger tombol utama
         trigger.addEventListener('keydown', function (e) {
             if (e.key === 'ArrowDown' || e.key === 'Enter' || e.key === ' ') {
                 e.preventDefault();
                 openDropdown();
-                const selectedItem = container.querySelector('[aria-selected="true"]') || items[0];
-                if (selectedItem) selectedItem.focus();
+                if (!searchInput) {
+                    const selectedItem = container.querySelector('[aria-selected="true"]') || items[0];
+                    if (selectedItem) selectedItem.focus();
+                }
             } else if (e.key === 'Escape') {
                 e.preventDefault();
                 closeDropdown();
