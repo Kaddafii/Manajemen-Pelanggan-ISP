@@ -9,9 +9,6 @@ use Illuminate\Database\Seeder;
 
 class InvoiceSeeder extends Seeder
 {
-    /**
-     * Menjalankan seeding data tagihan pelanggan ISP.
-     */
     public function run(): void
     {
         $customers = Customer::all();
@@ -27,13 +24,11 @@ class InvoiceSeeder extends Seeder
         ];
 
         foreach ($customers as $index => $customer) {
-            // Pelanggan dengan index ganjil memiliki 2 atau 3 tagihan, genap memiliki 1 tagihan
             $customerPeriods = ($index % 2 === 0) 
                 ? ['Februari 2026', 'Maret 2026'] 
                 : ['Januari 2026', 'Februari 2026', 'Maret 2026'];
 
             foreach ($customerPeriods as $periodIndex => $period) {
-                // Sebagian besar Januari dan Februari sudah Lunas, sebagian Maret Belum Bayar
                 $isPaid = ($period !== 'Maret 2026') || ($index % 3 === 0);
 
                 $paymentDate = null;

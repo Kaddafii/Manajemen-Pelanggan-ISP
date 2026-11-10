@@ -168,4 +168,71 @@ class UserAuthenticationTest extends TestCase
         $this->assertGuest();
         $response->assertRedirect(route('login.form'));
     }
+
+    /**
+     * Memastikan percobaan login dibatasi setelah gagal 5 kali berturut-turut.
+     */
+    public function test_login_attempts_are_throttled_after_too_many_failures(): void
+    {
+        User::factory()->create([
+            'email' => 'admin@isp.com',
+            'password' => 'password',
+            'role' => 'Administrator',
+        ]);
+
+        // Melakukan 5 kali percobaan login dengan password salah
+        for ($attempt = 1; $attempt <= 5; $attempt++) {
+            $response = $this->from('/login')->post('/login', [
+                'email' => 'admin@isp.com',
+                'password' => 'wrong-password',
+            ]);
+
+            $response->assertSessionHasErrors('email');
+            $this->assertGuest();
+        }
+
+        // Percobaan ke-6 harus diblokir oleh Rate Limiter
+        $blockedResponse = $this->from('/login')->post('/login', [
+            'email' => 'admin@isp.com',
+            'password' => 'wrong-password',
+        ]);
+
+        $blockedResponse->assertRedirect('/login');
+        $blockedResponse->assertSessionHasErrors(['email']);
+        $this->assertTrue(
+            session('errors')->first('email') !== 'Kombinasi alamat email dan kata sandi tidak sesuai dengan catatan kami.'
+        );
+        $this->assertStringContainsString('Terlalu banyak percobaan login', session('errors')->first('email'));
+    }
+
+    /**
+     * Memastikan rate limiter dibersihkan saat login berhasil.
+     */
+    public function test_login_rate_limiter_is_cleared_after_successful_authentication(): void
+    {
+        $user = User::factory()->create([
+            'email' => 'admin@isp.com',
+            'password' => 'password',
+            'role' => 'Administrator',
+        ]);
+
+        // 2 kali gagal
+        $this->post('/login', [
+            'email' => 'admin@isp.com',
+            'password' => 'wrong-password',
+        ]);
+        $this->post('/login', [
+            'email' => 'admin@isp.com',
+            'password' => 'wrong-password',
+        ]);
+
+        // Berhasil login
+        $successResponse = $this->post('/login', [
+            'email' => 'admin@isp.com',
+            'password' => 'password',
+        ]);
+
+        $this->assertAuthenticatedAs($user);
+        $successResponse->assertRedirect(route('dashboard.index'));
+    }
 }

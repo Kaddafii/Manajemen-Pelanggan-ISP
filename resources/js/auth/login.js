@@ -11,20 +11,4 @@ document.addEventListener('DOMContentLoaded', function () {
             togglePasswordIcon.className = isPasswordType ? 'bi bi-eye-slash text-base' : 'bi bi-eye text-base';
         });
     }
-
-    const demoButtons = document.querySelectorAll('[data-demo-email]');
-    demoButtons.forEach(button => {
-        button.addEventListener('click', function () {
-            const email = this.getAttribute('data-demo-email');
-            const password = this.getAttribute('data-demo-password');
-            const emailInput = document.getElementById('email');
-            const passwordInput = document.getElementById('password');
-
-            if (emailInput && passwordInput) {
-                emailInput.value = email;
-                passwordInput.value = password;
-                emailInput.focus();
-            }
-        });
-    });
 });

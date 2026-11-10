@@ -27,6 +27,7 @@ Aplikasi web manajemen pelanggan internet dan penagihan (billing) untuk penyedia
 
 - **Modul Autentikasi**:
   - Login aman berbasis email dan password.
+  - Pembatasan percobaan login (*Rate Limiting / Throttling*): Membatasi maksimal 5 kali percobaan gagal dalam 1 menit untuk mencegah serangan *brute force*.
   - Fitur *Remember Me* untuk mempertahankan sesi login pengguna.
   - Pengalihan cerdas berbasis peran (*role-based redirect*): Administrator diarahkan ke Dashboard, Staff diarahkan ke Pelanggan.
 
@@ -140,8 +141,8 @@ php artisan migrate --seed
 ```
 
 Perintah di atas akan secara otomatis mengeksekusi migrasi tabel dan mengisi data seeder:
-- 2 Akun Pengguna (`Administrator` dan `Staff`).
-- 25+ Data Pelanggan ISP dengan ragam paket dan status (untuk pengujian fitur pencarian, filter, dan pagination).
+- Akun Pengguna (`John Doe` sebagai Administrator, `Jane Smith` sebagai Staff, dsb.).
+- 26 Data Pelanggan ISP dengan nama standar (John Doe, Jane Smith, Robert Taylor, dsb.) beserta ragam paket dan status untuk pengujian pencarian, filter, dan pagination.
 - Data Tagihan Pelanggan dengan berbagai periode bulan dan status pembayaran.
 
 ### 8. Kompilasi Aset Frontend (Tailwind CSS & JavaScript)
@@ -170,11 +171,13 @@ Aplikasi siap diakses melalui peramban web pada alamat:
 Gunakan akun berikut untuk masuk dan menguji seluruh hak akses sistem:
 
 ### 1. Akun Administrator
+- **Nama:** `John Doe`
 - **Email:** `admin@isp.com`
 - **Password:** `password`
 - **Akses:** Akses penuh ke seluruh menu (Dashboard, Pelanggan, Tagihan, Kelola User, Hapus Data).
 
 ### 2. Akun Staff
+- **Nama:** `Jane Smith`
 - **Email:** `staff@isp.com`
 - **Password:** `password`
 - **Akses:** Terbatas untuk melihat dan mengelola data Pelanggan serta melihat Tagihan. Tidak memiliki hak akses Dashboard, Hapus Data, Pembayaran Tagihan, maupun Kelola User.
@@ -193,7 +196,7 @@ Cakupan pengujian otomatis meliputi:
 - `CustomerManagementTest`: Autentikasi pelanggan, pencarian, sorting, validasi form, pengubahan data, dan soft delete.
 - `InvoiceManagementTest`: Akses tagihan, filter status, pencarian, otorisasi bayar tagihan Administrator vs Staff.
 - `UserManagementTest`: Proteksi akses Administrator, CRUD user, filter role, dan pencegahan hapus akun sendiri (*self-deletion lockout*).
-- `UserAuthenticationTest`: Pengujian login, invalid credentials, remember me cookie persistence, dan logout.
+- `UserAuthenticationTest`: Pengujian login, invalid credentials, pembatasan percobaan login (rate limiting / throttling), remember me cookie persistence, dan logout.
 - `MasterLayoutAndAuthorizationTest`: Pengujian navigasi role-based, proteksi rute, dan keterlihatan menu sidebar.
 - `DashboardOverviewTest`: Verifikasi perhitungan metrik agregasi bisnis dan visualisasi grafik tagihan.
 
